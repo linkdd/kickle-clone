@@ -1,0 +1,3 @@
+[submodule "vendor/trollworks-sdk-core"]
+	path = vendor/trollworks-sdk-core
+	url = https://github.com/trollworks/sdk-core.git
