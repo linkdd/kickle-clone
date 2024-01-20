@@ -49,6 +49,8 @@ target_include_directories(${PROJECT_NAME}
     ${PROJECT_SOURCE_DIR}/vendor/trollworks-sdk-core/include
     ${PROJECT_SOURCE_DIR}/vendor/trollworks-sdk-backend-sdl/include
     ${PROJECT_SOURCE_DIR}/vendor/trollworks-sdk-backend-sdl/vendor/SDL/upstream/include
+    ${PROJECT_SOURCE_DIR}/vendor/trollworks-sdk-backend-sdl/vendor/SDL_image/upstream/include
+    ${PROJECT_SOURCE_DIR}/vendor/trollworks-sdk-backend-sdl/vendor/nlohmann-json/upstream/single_include
 )
 
 target_compile_options(${PROJECT_NAME} PRIVATE
