@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.22)
 project(kickle-clone CXX)
 
 add_subdirectory(vendor/trollworks-sdk-backend-sdl)
+add_subdirectory(vendor/physfs)
+add_subdirectory(vendor/physfsrwops)
 
 file(GLOB_RECURSE GAME_SOURCES
   ${PROJECT_SOURCE_DIR}/src/*.cpp

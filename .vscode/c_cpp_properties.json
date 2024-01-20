@@ -7,7 +7,9 @@
                 "${workspaceFolder}/vendor/trollworks-sdk-backend-sdl/include",
                 "${workspaceFolder}/vendor/trollworks-sdk-backend-sdl/vendor/SDL/upstream/include",
                 "${workspaceFolder}/vendor/trollworks-sdk-backend-sdl/vendor/SDL_image/upstream/include",
-                "${workspaceFolder}/vendor/trollworks-sdk-backend-sdl/vendor/nlohmann-json/upstream/single_include"
+                "${workspaceFolder}/vendor/trollworks-sdk-backend-sdl/vendor/nlohmann-json/upstream/single_include",
+                "${workspaceFolder}/vendor/physfs/upstream/src",
+                "${workspaceFolder}/vendor/physfsrwops/include"
             ],
             "defines": [
                 "_DEBUG",
