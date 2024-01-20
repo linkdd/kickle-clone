@@ -4,3 +4,6 @@
 [submodule "vendor/trollworks-sdk-backend-sdl"]
 	path = vendor/trollworks-sdk-backend-sdl
 	url = https://github.com/trollworks/sdk-backend-sdl.git
+[submodule "vendor/physfs/upstream"]
+	path = vendor/physfs/upstream
+	url = https://github.com/icculus/physfs.git
