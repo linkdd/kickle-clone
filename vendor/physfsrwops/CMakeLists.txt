@@ -9,7 +9,7 @@ add_library(
 
 target_include_directories(
   physfsrwops
-  PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include"
+  PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include"
   PRIVATE "$<TARGET_PROPERTY:physfs-static,INTERFACE_INCLUDE_DIRECTORIES>"
   PRIVATE "$<TARGET_PROPERTY:SDL2-static,INTERFACE_INCLUDE_DIRECTORIES>"
 )
