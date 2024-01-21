@@ -24,6 +24,8 @@ if(WIN32)
     SDL2main
     SDL2-static
     trollworks-sdk-backend-sdl
+    physfs-static
+    physfsrwops
     opengl32
     glu32
   )
@@ -31,6 +33,8 @@ elseif(APPLE)
   target_link_libraries(${PROJECT_NAME}
     SDL2-static
     trollworks-sdk-backend-sdl
+    physfs-static
+    physfsrwops
     opengl
     glu
   )
@@ -38,6 +42,8 @@ elseif(UNIX)
   target_link_libraries(${PROJECT_NAME}
     SDL2-static
     trollworks-sdk-backend-sdl
+    physfs-static
+    physfsrwops
     opengl
     glu
   )
