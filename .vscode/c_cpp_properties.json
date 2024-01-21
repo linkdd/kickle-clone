@@ -3,6 +3,7 @@
         {
             "name": "Default",
             "includePath": [
+                "${workspaceFolder}/include",
                 "${workspaceFolder}/vendor/trollworks-sdk-core/include",
                 "${workspaceFolder}/vendor/trollworks-sdk-backend-sdl/include",
                 "${workspaceFolder}/vendor/trollworks-sdk-backend-sdl/vendor/SDL/upstream/include",
