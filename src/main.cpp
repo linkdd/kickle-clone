@@ -10,7 +10,7 @@ int SDL_main(int, char** argv) {
     .with_logical_size({1024, 768})
     .with_fullscreen(false);
 
-  auto loader = resource_loader{
+  auto loader = game::assets::resource_loader{
     .argv0 = argv[0],
     .backend = backend
   };
@@ -19,8 +19,8 @@ int SDL_main(int, char** argv) {
     .with_fps(60)
     .with_ups(50)
     .with_backend(backend)
-    .on_setup<&resource_loader::setup>(loader)
-    .on_teardown<&resource_loader::teardown>(loader);
+    .on_setup<&game::assets::resource_loader::setup>(loader)
+    .on_teardown<&game::assets::resource_loader::teardown>(loader);
 
   loop.run();
   return 0;
