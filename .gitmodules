@@ -7,3 +7,6 @@
 [submodule "vendor/physfs/upstream"]
 	path = vendor/physfs/upstream
 	url = https://github.com/icculus/physfs.git
+[submodule "vendor/tinyxml2/upstream"]
+	path = vendor/tinyxml2/upstream
+	url = https://github.com/leethomason/tinyxml2.git
