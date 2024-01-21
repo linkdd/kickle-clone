@@ -52,13 +52,14 @@ else()
 endif()
 
 target_include_directories(${PROJECT_NAME}
-  PRIVATE
-    ${PROJECT_SOURCE_DIR}/include
-    ${PROJECT_SOURCE_DIR}/vendor/trollworks-sdk-core/include
-    ${PROJECT_SOURCE_DIR}/vendor/trollworks-sdk-backend-sdl/include
-    ${PROJECT_SOURCE_DIR}/vendor/trollworks-sdk-backend-sdl/vendor/SDL/upstream/include
-    ${PROJECT_SOURCE_DIR}/vendor/trollworks-sdk-backend-sdl/vendor/SDL_image/upstream/include
-    ${PROJECT_SOURCE_DIR}/vendor/trollworks-sdk-backend-sdl/vendor/nlohmann-json/upstream/single_include
+  PRIVATE ${PROJECT_SOURCE_DIR}/include
+  PRIVATE ${PROJECT_SOURCE_DIR}/vendor/trollworks-sdk-core/include
+  PRIVATE "$<TARGET_PROPERTY:trollworks-sdk-backend-sdl,INTERFACE_INCLUDE_DIRECTORIES>"
+  PRIVATE "$<TARGET_PROPERTY:SDL2-static,INTERFACE_INCLUDE_DIRECTORIES>"
+  PRIVATE "$<TARGET_PROPERTY:SDL2_image,INTERFACE_INCLUDE_DIRECTORIES>"
+  PRIVATE "$<TARGET_PROPERTY:nlohmann_json::nlohmann_json,INTERFACE_INCLUDE_DIRECTORIES>"
+  PRIVATE "$<TARGET_PROPERTY:physfs-static,INTERFACE_INCLUDE_DIRECTORIES>"
+  PRIVATE "$<TARGET_PROPERTY:physfsrwops,INTERFACE_INCLUDE_DIRECTORIES>"
 )
 
 target_compile_options(${PROJECT_NAME} PRIVATE
