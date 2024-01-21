@@ -13,10 +13,32 @@ file(GLOB_RECURSE GAME_HEADERS
   ${PROJECT_SOURCE_DIR}/include/*.hpp
 )
 
+set(GAME_ASSET_FILES
+  "${PROJECT_SOURCE_DIR}/assets/spritesheet.png"
+  "${PROJECT_SOURCE_DIR}/assets/spritesheet.json"
+  "${PROJECT_SOURCE_DIR}/assets/tilemaps/spritesheet.tsx"
+  "${PROJECT_SOURCE_DIR}/assets/tilemaps/level1.tmx"
+)
+
 add_executable(${PROJECT_NAME}
   ${GAME_SOURCES}
   ${GAME_HEADERS}
 )
+
+add_custom_command(
+  OUTPUT "${CMAKE_BINARY_DIR}/data.zip"
+  COMMAND ${CMAKE_COMMAND} -E tar "cfv" "${CMAKE_BINARY_DIR}/data.zip" --format=zip -- ${GAME_ASSET_FILES}
+  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/assets
+  DEPENDS ${GAME_ASSET_FILES}
+  COMMENT "Creating data.zip archive"
+)
+
+add_custom_target(
+  ${PROJECT_NAME}-assets ALL
+  DEPENDS "${CMAKE_BINARY_DIR}/data.zip"
+)
+
+add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}-assets)
 
 if(WIN32)
   target_link_libraries(${PROJECT_NAME}
