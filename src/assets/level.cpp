@@ -131,7 +131,7 @@ namespace game::assets {
             tiles[y * width + x] = std::nullopt;
           }
           else {
-            tiles[y * width + x] = col + firstgid;
+            tiles[y * width + x] = col - firstgid;
           }
 
           x++;
