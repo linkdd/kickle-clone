@@ -4,6 +4,7 @@ project(kickle-clone CXX)
 add_subdirectory(vendor/trollworks-sdk-backend-sdl)
 add_subdirectory(vendor/physfs)
 add_subdirectory(vendor/physfsrwops)
+add_subdirectory(vendor/tinyxml2)
 
 file(GLOB_RECURSE GAME_SOURCES
   ${PROJECT_SOURCE_DIR}/src/*.cpp
@@ -48,6 +49,7 @@ if(WIN32)
     trollworks-sdk-backend-sdl
     physfs-static
     physfsrwops
+    tinyxml2
     opengl32
     glu32
   )
@@ -57,6 +59,7 @@ elseif(APPLE)
     trollworks-sdk-backend-sdl
     physfs-static
     physfsrwops
+    tinyxml2
     opengl
     glu
   )
@@ -66,6 +69,7 @@ elseif(UNIX)
     trollworks-sdk-backend-sdl
     physfs-static
     physfsrwops
+    tinyxml2
     opengl
     glu
   )
@@ -82,6 +86,7 @@ target_include_directories(${PROJECT_NAME}
   PRIVATE "$<TARGET_PROPERTY:nlohmann_json::nlohmann_json,INTERFACE_INCLUDE_DIRECTORIES>"
   PRIVATE "$<TARGET_PROPERTY:physfs-static,INTERFACE_INCLUDE_DIRECTORIES>"
   PRIVATE "$<TARGET_PROPERTY:physfsrwops,INTERFACE_INCLUDE_DIRECTORIES>"
+  PRIVATE "$<TARGET_PROPERTY:tinyxml2,INTERFACE_INCLUDE_DIRECTORIES>"
 )
 
 target_compile_options(${PROJECT_NAME} PRIVATE
