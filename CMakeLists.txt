@@ -17,7 +17,7 @@ file(GLOB_RECURSE GAME_HEADERS
 set(GAME_ASSET_FILES
   "${PROJECT_SOURCE_DIR}/assets/spritesheet.png"
   "${PROJECT_SOURCE_DIR}/assets/spritesheet.json"
-  "${PROJECT_SOURCE_DIR}/assets/tilemaps/spritesheet.tsx"
+  "${PROJECT_SOURCE_DIR}/assets/tilemaps/tileset.tsx"
   "${PROJECT_SOURCE_DIR}/assets/tilemaps/level1.tmx"
 )
 
