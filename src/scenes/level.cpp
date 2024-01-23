@@ -25,7 +25,7 @@ namespace game::scenes {
   entt::entity make_tile(
     entt::registry& registry,
     SDL_Texture* texture,
-    SDL_Rect source,
+    tw::sdl::aseprite::spritesheet::frame& frame,
     assets::level::layer& layer,
     size_t layer_idx,
     int row,
@@ -39,11 +39,61 @@ namespace game::scenes {
 
     auto& c_sprite = registry.emplace<tw::sdl::sprite>(e_tile);
     c_sprite.texture = texture;
-    c_sprite.source = source;
+    c_sprite.source = frame.source;
     c_sprite.layer = static_cast<Uint32>(layer_idx);
     c_sprite.order_in_layer = static_cast<Uint32>(row * layer.width + col);
 
     return e_tile;
+  }
+
+  void make_player(
+    entt::registry& registry,
+    assets::level::objectgroup& group,
+    entt::resource<tw::sdl::aseprite::spritesheet>& spritesheet,
+    int layer_idx
+  ) {
+    auto frame0 = spritesheet->get_frame("player-down-walk 0.aseprite").value();
+    auto frame1 = spritesheet->get_frame("player-down-walk 1.aseprite").value();
+
+    auto players = group.view<
+      assets::level::object,
+      assets::level::object::player_spawn
+    >();
+
+    for (auto e_player_info : players) {
+      auto& c_object = players.get<assets::level::object>(e_player_info);
+
+      auto e_player = registry.create();
+
+      auto& c_transform = registry.emplace<tw::sdl::transform>(e_player);
+      c_transform.position = SDL_FPoint{
+        .x = c_object.col * 32.0f,
+        .y = c_object.row * 32.0f
+      };
+      c_transform.scale = SDL_FPoint{.x = 1.0f, .y = 1.0f};
+
+      auto& c_sprite = registry.emplace<tw::sdl::sprite>(e_player);
+      c_sprite.texture = spritesheet->get_texture();
+      c_sprite.source = frame0.source;
+      c_sprite.layer = static_cast<Uint32>(layer_idx);
+      c_sprite.order_in_layer = 0;
+
+      auto& c_animation = registry.emplace<tw::sdl::animation>(e_player);
+      c_animation.frames = {
+        tw::sdl::animation::frame{
+          .texture = spritesheet->get_texture(),
+          .source = frame0.source,
+          .frame_duration = frame0.duration
+        },
+        tw::sdl::animation::frame{
+          .texture = spritesheet->get_texture(),
+          .source = frame1.source,
+          .frame_duration = frame1.duration
+        }
+      };
+      c_animation.frame_index = 0;
+      c_animation.frame_time = 0.0f;
+    }
   }
 
   void level::load(entt::registry& registry) {
@@ -52,6 +102,13 @@ namespace game::scenes {
     // create level entities
     auto& level_cache = tw::asset_manager<assets::level>::cache();
     auto level = level_cache[m_level_id];
+
+    make_player(
+      registry,
+      level->objectgroups[0],
+      level->tileset->spritesheet,
+      level->layers.size() + 1
+    );
 
     auto tilemap_state = state::tilemap{};
     tilemap_state.layers.resize(level->layers.size());
@@ -78,15 +135,14 @@ namespace game::scenes {
             auto tile_id = tile.value();
             auto tile_name = level->tileset->tiles[tile_id];
             auto spritesheet = level->tileset->spritesheet;
+            auto texture = spritesheet->get_texture();
             auto frame = spritesheet->get_frame(tile_name);
 
             if (frame.has_value()) {
-              auto [texture, source] = frame.value();
-
               tile_state.entity = make_tile(
                 registry,
                 texture,
-                source,
+                frame.value(),
                 layer,
                 layer_idx,
                 row,
