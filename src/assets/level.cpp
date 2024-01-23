@@ -171,10 +171,10 @@ namespace game::assets {
         c_object.row = row;
         c_object.col = col;
 
-        if (name == "player_spawn") {
+        if (name == "player-spawn") {
           group.emplace<level::object::player_spawn>(e_object);
         }
-        else if (name == "enemy_spawner") {
+        else if (name == "enemy-spawner") {
           auto& c_spawner = group.emplace<level::object::enemy_spawner>(e_object);
 
           for (
@@ -190,6 +190,8 @@ namespace game::assets {
           }
         }
       }
+
+      result->objectgroups.push_back(std::move(group));
     }
 
     return result;
