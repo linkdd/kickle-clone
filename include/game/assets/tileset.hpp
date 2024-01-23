@@ -5,7 +5,6 @@
 #include <string>
 
 #include <trollworks-backend-sdl.hpp>
-#include <trollworks-backend-sdl/assets.hpp>
 #include <tinyxml2.h>
 
 namespace game::assets {

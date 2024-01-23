@@ -3,7 +3,6 @@
 
 #include <physfs.h>
 #include <physfsrwops.h>
-#include <trollworks-backend-sdl/assets.hpp>
 
 #include <game/assets/utils.hpp>
 #include <game/assets/loader.hpp>

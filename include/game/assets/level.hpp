@@ -4,9 +4,10 @@
 #include <memory>
 #include <vector>
 
-#include <trollworks-backend-sdl.hpp>
-#include <trollworks-backend-sdl/assets.hpp>
 #include <tinyxml2.h>
+
+#include <trollworks.hpp>
+#include <trollworks-backend-sdl.hpp>
 
 #include "./tileset.hpp"
 
@@ -18,8 +19,22 @@ namespace game::assets {
       std::vector<std::optional<int>> tiles;
     };
 
+    struct object {
+      int row;
+      int col;
+
+      struct enemy_spawner {
+        std::string type;
+      };
+
+      struct player_spawn {};
+    };
+
+    using objectgroup = entt::registry;
+
     entt::resource<tileset> tileset;
     std::vector<layer> layers;
+    std::vector<objectgroup> objectgroups;
 
     struct loader_type {
       using result_type = std::shared_ptr<level>;

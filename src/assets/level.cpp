@@ -97,6 +97,8 @@ namespace game::assets {
     auto map = doc.FirstChildElement("map");
     auto width = map->IntAttribute("width");
     auto height = map->IntAttribute("height");
+    auto tilewidth = map->IntAttribute("tilewidth");
+    auto tileheight = map->IntAttribute("tileheight");
 
     auto firstgid = map->FirstChildElement("tileset")->IntAttribute("firstgid");
 
@@ -145,6 +147,49 @@ namespace game::assets {
         .height = height,
         .tiles = std::move(tiles),
       });
+    }
+
+    for (
+      auto objectgroup = map->FirstChildElement("objectgroup");
+      objectgroup;
+      objectgroup = objectgroup->NextSiblingElement("objectgroup")
+    ) {
+      auto group = level::objectgroup{};
+
+      for (
+        auto object = objectgroup->FirstChildElement("object");
+        object;
+        object = object->NextSiblingElement("object")
+      ) {
+        auto row = object->IntAttribute("y") / tileheight;
+        auto col = object->IntAttribute("x") / tilewidth;
+        auto name = std::string_view{object->Attribute("name")};
+        auto properties = object->FirstChildElement("properties");
+
+        auto e_object = group.create();
+        auto& c_object = group.emplace<level::object>(e_object);
+        c_object.row = row;
+        c_object.col = col;
+
+        if (name == "player_spawn") {
+          group.emplace<level::object::player_spawn>(e_object);
+        }
+        else if (name == "enemy_spawner") {
+          auto& c_spawner = group.emplace<level::object::enemy_spawner>(e_object);
+
+          for (
+            auto property = properties->FirstChildElement("property");
+            property;
+            property = property->NextSiblingElement("property")
+          ) {
+            auto name = std::string_view{property->Attribute("name")};
+
+            if (name == "type") {
+              c_spawner.type = std::string_view{property->Attribute("value")};
+            }
+          }
+        }
+      }
     }
 
     return result;
