@@ -90,8 +90,8 @@ endif()
 
 target_include_directories(${PROJECT_NAME}
   PRIVATE ${PROJECT_SOURCE_DIR}/include
-  PRIVATE $ENV{SHIPP_DIST_DIR}/include
-  PRIVATE $ENV{SHIPP_DIST_DIR}/include/SDL2
+  PRIVATE ${CMAKE_INSTALL_PREFIX}/include
+  PRIVATE ${CMAKE_INSTALL_PREFIX}/include/SDL2
 )
 
 target_compile_options(${PROJECT_NAME} PRIVATE
