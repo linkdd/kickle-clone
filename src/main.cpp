@@ -1,5 +1,6 @@
 #include <trollworks.hpp>
 #include <trollworks-backend-sdl.hpp>
+#include <trollworks-imgui-sdl.hpp>
 #include <game/assets/loader.hpp>
 #include <game/scenes/level.hpp>
 
@@ -19,6 +20,12 @@ int SDL_main(int, char** argv) {
     .with_logical_size({1024, 768})
     .with_fullscreen(false);
 
+  auto gui = tw::sdl::ui::imgui_sdl_plugin{backend};
+
+  backend
+    .on_event<&tw::sdl::ui::imgui_sdl_plugin::process_event>(gui)
+    .on_gui<&tw::sdl::ui::imgui_sdl_plugin::render>(gui);
+
   auto loader = game::assets::resource_loader{
     .argv0 = argv[0],
     .backend = backend
@@ -30,6 +37,8 @@ int SDL_main(int, char** argv) {
     .with_fps(60)
     .with_ups(50)
     .with_backend(backend)
+    .on_setup<&tw::sdl::ui::imgui_sdl_plugin::setup>(gui)
+    .on_teardown<&tw::sdl::ui::imgui_sdl_plugin::teardown>(gui)
     .on_setup<&game::assets::resource_loader::setup>(loader)
     .on_teardown<&game::assets::resource_loader::teardown>(loader)
     .on_setup<&game_state::setup>(gs);
