@@ -1,0 +1,34 @@
+{
+  "name": "kickle-clone",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "make all",
+    "install": "make install"
+  },
+  "dependencies": [
+    {
+      "name": "trollworks-sdk-core",
+      "url": "https://github.com/trollworks/sdk-core.git"
+    },
+    {
+      "name": "trollworks-sdk-backend-sdl",
+      "url": "https://github.com/trollworks/sdk-backend-sdl.git"
+    },
+    {
+      "name": "trollworks-sdk-imgui-sdl",
+      "url": "https://github.com/trollworks/sdk-imgui-sdl.git"
+    },
+    {
+      "name": "tinyxml2",
+      "url": "https://github.com/trollworks/shipp-tinyxml2.git"
+    },
+    {
+      "name": "physfs",
+      "url": "https://github.com/trollworks/shipp-physfs.git"
+    },
+    {
+      "name": "physfsrwops",
+      "url": "https://github.com/trollworks/shipp-physfsrwops.git"
+    }
+  ]
+}

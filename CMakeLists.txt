@@ -1,10 +1,14 @@
 cmake_minimum_required(VERSION 3.22)
 project(kickle-clone CXX)
 
-add_subdirectory(vendor/trollworks-sdk-backend-sdl)
-add_subdirectory(vendor/physfs)
-add_subdirectory(vendor/physfsrwops)
-add_subdirectory(vendor/tinyxml2)
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
+find_package(tinyxml2 REQUIRED)
+
+find_library(trollworks_sdk_backend_sdl_LIBRARY trollworks-sdk-backend-sdl REQUIRED)
+find_library(trollworks_sdk_imgui_sdl_LIBRARY trollworks-sdk-imgui-sdl REQUIRED)
+find_library(physfs_LIBRARY physfs REQUIRED)
+find_library(physfsrwops_LIBRARY physfsrwops REQUIRED)
 
 file(GLOB_RECURSE GAME_SOURCES
   ${PROJECT_SOURCE_DIR}/src/*.cpp
@@ -45,32 +49,38 @@ add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}-assets)
 if(WIN32)
   target_link_libraries(${PROJECT_NAME}
     mingw32
-    SDL2main
-    SDL2-static
-    trollworks-sdk-backend-sdl
-    physfs-static
-    physfsrwops
-    tinyxml2
+    SDL2::SDL2main
+    SDL2::SDL2-static
+    ${trollworks_sdk_backend_sdl_LIBRARY}
+    SDL2_image::SDL2_image-static
+    ${trollworks_sdk_imgui_sdl_LIBRARY}
+    ${physfs_LIBRARY}
+    ${physfsrwops_LIBRARY}
+    tinyxml2::tinyxml2
     opengl32
     glu32
   )
 elseif(APPLE)
   target_link_libraries(${PROJECT_NAME}
-    SDL2-static
-    trollworks-sdk-backend-sdl
-    physfs-static
-    physfsrwops
-    tinyxml2
+    SDL2::SDL2-static
+    ${trollworks_sdk_backend_sdl_LIBRARY}
+    SDL2_image::SDL2_image-static
+    ${trollworks_sdk_imgui_sdl_LIBRARY}
+    ${physfs_LIBRARY}
+    ${physfsrwops_LIBRARY}
+    tinyxml2::tinyxml2
     opengl
     glu
   )
 elseif(UNIX)
   target_link_libraries(${PROJECT_NAME}
-    SDL2-static
-    trollworks-sdk-backend-sdl
-    physfs-static
-    physfsrwops
-    tinyxml2
+    SDL2::SDL2-static
+    ${trollworks_sdk_backend_sdl_LIBRARY}
+    SDL2_image::SDL2_image-static
+    ${trollworks_sdk_imgui_sdl_LIBRARY}
+    ${physfs_LIBRARY}
+    ${physfsrwops_LIBRARY}
+    tinyxml2::tinyxml2
     opengl
     glu
   )
@@ -80,14 +90,8 @@ endif()
 
 target_include_directories(${PROJECT_NAME}
   PRIVATE ${PROJECT_SOURCE_DIR}/include
-  PRIVATE ${PROJECT_SOURCE_DIR}/vendor/trollworks-sdk-core/include
-  PRIVATE "$<TARGET_PROPERTY:trollworks-sdk-backend-sdl,INTERFACE_INCLUDE_DIRECTORIES>"
-  PRIVATE "$<TARGET_PROPERTY:SDL2-static,INTERFACE_INCLUDE_DIRECTORIES>"
-  PRIVATE "$<TARGET_PROPERTY:SDL2_image,INTERFACE_INCLUDE_DIRECTORIES>"
-  PRIVATE "$<TARGET_PROPERTY:nlohmann_json::nlohmann_json,INTERFACE_INCLUDE_DIRECTORIES>"
-  PRIVATE "$<TARGET_PROPERTY:physfs-static,INTERFACE_INCLUDE_DIRECTORIES>"
-  PRIVATE "$<TARGET_PROPERTY:physfsrwops,INTERFACE_INCLUDE_DIRECTORIES>"
-  PRIVATE "$<TARGET_PROPERTY:tinyxml2,INTERFACE_INCLUDE_DIRECTORIES>"
+  PRIVATE $ENV{SHIPP_DIST_DIR}/include
+  PRIVATE $ENV{SHIPP_DIST_DIR}/include/SDL2
 )
 
 target_compile_options(${PROJECT_NAME} PRIVATE
@@ -95,9 +99,4 @@ target_compile_options(${PROJECT_NAME} PRIVATE
 )
 
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
-
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-  set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/dist/debug")
-else()
-  set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/dist/release")
-endif()
+install(FILES "${CMAKE_BINARY_DIR}/data.zip" DESTINATION bin)
