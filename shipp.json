@@ -29,6 +29,10 @@
     {
       "name": "physfsrwops",
       "url": "https://github.com/trollworks/shipp-physfsrwops.git"
+    },
+    {
+      "name": "aitoolkit",
+      "url": "https://github.com/linkdd/aitoolkit.git"
     }
   ]
 }
