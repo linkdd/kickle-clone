@@ -3,7 +3,7 @@
 #include <game/state.hpp>
 
 namespace game::scenes {
-  void make_camera(entt::registry& registry) {
+  static void make_camera(entt::registry& registry) {
     auto e_camera = registry.create();
 
     auto& c_camera = registry.emplace<tw::sdl::camera>(e_camera);
@@ -22,7 +22,7 @@ namespace game::scenes {
     };
   }
 
-  entt::entity make_tile(
+  static entt::entity make_tile(
     entt::registry& registry,
     SDL_Texture* texture,
     tw::sdl::aseprite::spritesheet::frame& frame,
@@ -46,7 +46,7 @@ namespace game::scenes {
     return e_tile;
   }
 
-  void make_player(
+  static void make_player(
     entt::registry& registry,
     assets::level::objectgroup& group,
     entt::resource<tw::sdl::aseprite::spritesheet>& spritesheet,

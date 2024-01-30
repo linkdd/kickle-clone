@@ -13,6 +13,7 @@ namespace game::lifecycle {
     tw::message_bus::main().sink<messages::quit_game>().connect<&manager::on_quit_game>(*this);
     tw::message_bus::main().sink<messages::load_level>().connect<&manager::on_load_level>(*this);
 
+    m_fsm.set_state(titlescreen{}, m_global_state);
   }
 
   void manager::update(float, tw::controlflow& cf) {
