@@ -12,6 +12,26 @@
 using namespace entt::literals;
 
 namespace game::assets {
+  entt::resource<tw::sdl::aseprite::spritesheet> load_titlescreen(SDL_Renderer *renderer) {
+    SDL_Log("  - titlescreen");
+
+    auto& spritesheet_cache = tw::asset_manager<tw::sdl::aseprite::spritesheet>::cache();
+
+    auto titlescreen_texture = PHYSFSRWOPS_openRead("titlescreen.png");
+    auto titlescreen_meta = nlohmann::json::parse(
+      SDL_RWreadAll(PHYSFSRWOPS_openRead("titlescreen.json"), true)
+    );
+
+    auto res = spritesheet_cache.load(
+      "titlescreen"_hs,
+      renderer,
+      titlescreen_texture,
+      titlescreen_meta
+    );
+
+    return res.first->second;
+  }
+
   entt::resource<tw::sdl::aseprite::spritesheet> load_spritesheet(SDL_Renderer *renderer) {
     SDL_Log("  - spritesheet");
 
@@ -102,6 +122,7 @@ namespace game::assets {
 
     SDL_Log("Load resources:");
 
+    load_titlescreen(backend.renderer());
     auto spritesheet = load_spritesheet(backend.renderer());
     auto tileset = load_tileset(spritesheet);
 
