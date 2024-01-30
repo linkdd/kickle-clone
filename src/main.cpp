@@ -15,6 +15,7 @@ int SDL_main(int, char** argv) {
 
   auto gs = game::state::global{};
   auto mgr = game::lifecycle::manager{gs};
+  auto gui = game::ui::system{};
 
   auto loop = tw::game_loop{};
   auto backend = tw::sdl::sdl_backend{"Kickle Clone"};
@@ -32,7 +33,7 @@ int SDL_main(int, char** argv) {
     .on_gui<&tw::sdl::ui::imgui_sdl_plugin::render>(gui_backend);
 
   gui_backend
-    .on_render<&gui_renderer::render>(gui);
+    .on_render<&game::ui::system::execute>(gui);
 
   loop
     .with_fps(60)
