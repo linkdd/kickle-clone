@@ -2,6 +2,7 @@
 
 #include <optional>
 #include <vector>
+#include <string>
 
 #include <trollworks.hpp>
 
@@ -20,5 +21,10 @@ namespace game::state {
 
   struct tilemap {
     std::vector<layer> layers;
+  };
+
+  struct global {
+    std::vector<std::string> level_names;
+    bool quit_requested{false};
   };
 }
