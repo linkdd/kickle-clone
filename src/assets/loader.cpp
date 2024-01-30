@@ -111,6 +111,7 @@ namespace game::assets {
 
     for (auto& level : levels.at("levels")) {
       auto level_name = level.get<std::string>();
+      global_state.level_names.push_back(level_name);
       load_level(tileset, level_name);
     }
   }

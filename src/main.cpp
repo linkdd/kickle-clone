@@ -4,35 +4,23 @@
 
 #include <game/assets/loader.hpp>
 #include <game/scenes/level.hpp>
-#include <game/ui/menu.hpp>
+#include <game/state.hpp>
 
 using namespace entt::literals;
-
-struct game_state {
-  void setup(tw::controlflow&) {
-    tw::scene_manager::main().load(game::scenes::level{"level1"_hs});
-  }
-};
-
-struct gui_renderer {
-  void render() {
-    tw::ui::h<game::ui::menu>("menu"_hs, game::ui::menu{});
-  }
-};
 
 int SDL_main(int, char** argv) {
   SDL_Log("ARGV0=%s", argv[0]);
   SDL_Log("BASE_PATH=%s", SDL_GetBasePath());
 
-  auto gs = game_state{};
-  auto gui = gui_renderer{};
+  auto gs = game::state::global{};
 
   auto loop = tw::game_loop{};
   auto backend = tw::sdl::sdl_backend{"Kickle Clone"};
   auto gui_backend = tw::sdl::ui::imgui_sdl_plugin{backend};
   auto loader = game::assets::resource_loader{
     .argv0 = argv[0],
-    .backend = backend
+    .backend = backend,
+    .global_state = gs
   };
 
   backend
