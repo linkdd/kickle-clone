@@ -2,8 +2,9 @@
 #include <trollworks-backend-sdl.hpp>
 #include <trollworks-imgui-sdl.hpp>
 
+#include <game/lifecycle/manager.hpp>
 #include <game/assets/loader.hpp>
-#include <game/scenes/level.hpp>
+#include <game/ui/system.hpp>
 #include <game/state.hpp>
 
 using namespace entt::literals;
@@ -13,6 +14,7 @@ int SDL_main(int, char** argv) {
   SDL_Log("BASE_PATH=%s", SDL_GetBasePath());
 
   auto gs = game::state::global{};
+  auto mgr = game::lifecycle::manager{gs};
 
   auto loop = tw::game_loop{};
   auto backend = tw::sdl::sdl_backend{"Kickle Clone"};
@@ -40,7 +42,9 @@ int SDL_main(int, char** argv) {
     .on_teardown<&tw::sdl::ui::imgui_sdl_plugin::teardown>(gui_backend)
     .on_setup<&game::assets::resource_loader::setup>(loader)
     .on_teardown<&game::assets::resource_loader::teardown>(loader)
-    .on_setup<&game_state::setup>(gs)
+    .on_setup<&game::lifecycle::manager::setup>(mgr)
+    .on_teardown<&game::lifecycle::manager::teardown>(mgr)
+    .on_update<&game::lifecycle::manager::update>(mgr)
     .run();
 
   return 0;
