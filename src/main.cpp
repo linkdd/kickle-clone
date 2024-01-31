@@ -45,7 +45,6 @@ int SDL_main(int, char** argv) {
     .on_teardown<&game::assets::resource_loader::teardown>(loader)
     .on_setup<&game::lifecycle::manager::setup>(mgr)
     .on_teardown<&game::lifecycle::manager::teardown>(mgr)
-    .on_update<&game::lifecycle::manager::update>(mgr)
     .run();
 
   return 0;
