@@ -1,11 +1,11 @@
 .PHONY: all
 all:
-	@./autogen.sh
+	@sh ./autogen.sh
 	@make -C __build__/ all
 
 .PHONY: install
 install:
-	@./autogen.sh
+	@sh ./autogen.sh
 	@make -C __build__/ install
 
 .PHONY: run
