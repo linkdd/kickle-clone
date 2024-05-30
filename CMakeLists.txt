@@ -71,8 +71,7 @@ elseif(APPLE)
     ${physfs_LIBRARY}
     ${physfsrwops_LIBRARY}
     tinyxml2::tinyxml2
-    opengl
-    glu
+    GL
   )
 elseif(UNIX)
   target_link_libraries(${PROJECT_NAME}
@@ -83,8 +82,7 @@ elseif(UNIX)
     ${physfs_LIBRARY}
     ${physfsrwops_LIBRARY}
     tinyxml2::tinyxml2
-    opengl
-    glu
+    GL
   )
 else()
   message(FATAL_ERROR "Platform not supported")
