@@ -60,6 +60,10 @@ if(WIN32)
     opengl32
     glu32
   )
+
+  target_link_options(${PROJECT_NAME} PRIVATE
+    -static-libstdc++
+  )
 elseif(APPLE)
   target_link_libraries(${PROJECT_NAME}
     SDL2::SDL2-static
