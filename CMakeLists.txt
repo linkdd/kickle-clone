@@ -18,14 +18,13 @@ file(GLOB_RECURSE GAME_HEADERS
   ${PROJECT_SOURCE_DIR}/include/*.hpp
 )
 
-set(GAME_ASSET_FILES
-  "${PROJECT_SOURCE_DIR}/assets/titlescreen.png"
-  "${PROJECT_SOURCE_DIR}/assets/titlescreen.json"
-  "${PROJECT_SOURCE_DIR}/assets/spritesheet.png"
-  "${PROJECT_SOURCE_DIR}/assets/spritesheet.json"
-  "${PROJECT_SOURCE_DIR}/assets/levels.json"
-  "${PROJECT_SOURCE_DIR}/assets/tilemaps/tileset.tsx"
-  "${PROJECT_SOURCE_DIR}/assets/tilemaps/level1.tmx"
+file(GLOB_RECURSE GAME_ASSET_FILES
+  ${PROJECT_SOURCE_DIR}/assets/*.png
+  ${PROJECT_SOURCE_DIR}/assets/*.json
+  ${PROJECT_SOURCE_DIR}/assets/sprites/*.png
+  ${PROJECT_SOURCE_DIR}/assets/sprites/*.json
+  ${PROJECT_SOURCE_DIR}/assets/tilemaps/*.tsx
+  ${PROJECT_SOURCE_DIR}/assets/tilemaps/*.tmx
 )
 
 add_executable(${PROJECT_NAME}
@@ -51,7 +50,6 @@ add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}-assets)
 if(WIN32)
   target_link_libraries(${PROJECT_NAME}
     mingw32
-    SDL2::SDL2main
     SDL2::SDL2-static
     ${trollworks_sdk_backend_sdl_LIBRARY}
     SDL2_image::SDL2_image-static
