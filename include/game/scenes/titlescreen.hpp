@@ -8,4 +8,9 @@ namespace game::scenes {
       virtual void load(entt::registry& registry) override;
       virtual void unload(entt::registry& registry) override;
   };
+
+  namespace archetypes {
+    entt::entity camera(entt::registry& registry);
+    entt::entity background(entt::registry& registry);
+  }
 }

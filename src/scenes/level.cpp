@@ -1,3 +1,4 @@
+/*
 #include <game/scenes/level.hpp>
 #include <game/assets/level.hpp>
 #include <game/state.hpp>
@@ -176,3 +177,4 @@ namespace game::scenes {
     registry.ctx().erase<state::tilemap>();
   }
 }
+*/

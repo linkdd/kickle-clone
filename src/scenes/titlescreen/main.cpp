@@ -1,3 +1,17 @@
+#include <game/scenes/titlescreen.hpp>
+
+namespace game::scenes {
+  void titlescreen::load(entt::registry& registry) {
+    archetypes::camera(registry);
+    archetypes::background(registry);
+  }
+
+  void titlescreen::unload(entt::registry& registry) {
+    registry.clear();
+  }
+}
+
+/*
 #include <trollworks-backend-sdl.hpp>
 
 #include <game/scenes/titlescreen.hpp>
@@ -53,3 +67,4 @@ namespace game::scenes {
     registry.clear();
   }
 }
+*/

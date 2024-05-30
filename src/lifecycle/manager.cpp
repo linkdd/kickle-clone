@@ -2,16 +2,10 @@
 
 #include <game/lifecycle/manager.hpp>
 #include <game/scenes/titlescreen.hpp>
-#include <game/scenes/level.hpp>
+//#include <game/scenes/level.hpp>
 
 namespace game::lifecycle {
-  manager::manager(state::global& global_state)
-    : m_global_state{global_state}
-  {}
-
   void manager::setup(tw::controlflow&) {
-    tw::scene_manager::main().registry().ctx().emplace<state::global*>(&m_global_state);
-
     tw::message_bus::main().sink<messages::quit_game>().connect<&manager::on_quit_game>(*this);
     tw::message_bus::main().sink<messages::load_level>().connect<&manager::on_load_level>(*this);
 
@@ -31,7 +25,7 @@ namespace game::lifecycle {
     SDL_PushEvent(&evt);
   }
 
-  void manager::on_load_level(const messages::load_level& msg) {
-    tw::scene_manager::main().load(scenes::level{msg.level_id});
+  void manager::on_load_level(const messages::load_level&) {
+    //tw::scene_manager::main().load(scenes::level{msg.level_id});
   }
 }
