@@ -16,7 +16,7 @@ namespace game::assets::tiled_editor {
     if (tileset_rw == nullptr) {
       logging::logger().error(
         "Could not open tileset",
-        logfmtxx::field{"path", path.c_str()}
+        logfmtxx::field{"path", path.string().c_str()}
       );
       return nullptr;
     }
@@ -26,6 +26,7 @@ namespace game::assets::tiled_editor {
     if (tileset_doc.Parse(xml_data.data(), xml_data.size()) != tinyxml2::XML_SUCCESS) {
       logging::logger().error(
         "Could not parse tileset",
+        logfmtxx::field{"path", path.string().c_str()},
         logfmtxx::field{"reason", tileset_doc.ErrorName()}
       );
       return nullptr;
@@ -49,7 +50,7 @@ namespace game::assets::tiled_editor {
         ).lexically_normal();
 
         auto [it, _loaded] = animation_cache.load(
-          entt::hashed_string{sheet_path.c_str()},
+          entt::hashed_string{sheet_path.string().c_str()},
           renderer,
           sheet_path
         );

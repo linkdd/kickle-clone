@@ -12,7 +12,7 @@ namespace game::assets {
     public:
       SDL_RWops* open(const std::filesystem::path& filepath) override {
         logging::logger().info("hello");
-        return PHYSFSRWOPS_openRead(filepath.c_str());
+        return PHYSFSRWOPS_openRead(filepath.string().c_str());
       }
   };
 
@@ -29,7 +29,7 @@ namespace game::assets {
     auto data_path = std::filesystem::path{PHYSFS_getBaseDir()} / "data.zip";
     logging::logger().debug(
       "Mount data archive",
-      logfmtxx::field{"path", data_path.c_str()}
+      logfmtxx::field{"path", data_path.string().c_str()}
     );
     if (!PHYSFS_mount(data_path.string().c_str(), nullptr, 1)) {
       logging::logger().error(

@@ -22,7 +22,7 @@ namespace game::assets::tiled_editor {
     if (level_rw == nullptr) {
       logging::logger().error(
         "Could not open level",
-        logfmtxx::field{"path", path.c_str()}
+        logfmtxx::field{"path", path.string().c_str()}
       );
       return nullptr;
     }
@@ -32,6 +32,7 @@ namespace game::assets::tiled_editor {
     if (level_doc.Parse(xml_data.data(), xml_data.size()) != tinyxml2::XML_SUCCESS) {
       logging::logger().error(
         "Could not parse level",
+        logfmtxx::field{"path", path.string().c_str()},
         logfmtxx::field{"reason", level_doc.ErrorName()}
       );
       return nullptr;
@@ -59,7 +60,7 @@ namespace game::assets::tiled_editor {
         ).lexically_normal();
 
         auto [it, _loaded] = tileset_cache.load(
-          entt::hashed_string{tileset_path.c_str()},
+          entt::hashed_string{tileset_path.string().c_str()},
           renderer,
           tileset_path
         );
